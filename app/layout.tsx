@@ -7,8 +7,13 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="fr">
-      <body className="flex flex-col h-screen">
-        <div className="flex-grow">{children}</div>
+      <body className="">
+        <div className="flex flex-col justify-between min-h-screen">
+           
+          
+          <div className="flex-grow"> {children}</div>
+           
+        </div>
       </body>
     </html>
   );
