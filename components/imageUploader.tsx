@@ -22,10 +22,12 @@ const ImageUploader: React.FC<ImageUploaderProps> = ({ onImageUpload }) => {
       maxSizeMB: 0.5,
       maxWidthOrHeight: 200,
       useWebWorker: true,
+      fileType: "image/jpeg",
     };
 
     try {
       const compressedFile = await imageCompression(imageFile, options);
+      
       const reader = new FileReader();
       reader.readAsArrayBuffer(compressedFile);
       reader.onloadend = () => {
