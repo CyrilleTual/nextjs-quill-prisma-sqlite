@@ -34,9 +34,10 @@ const PostsList = () => {
                  <h2 className="text-xl font-bold text-gray-800 mb-2 flex-grow-0">
                    {post.title}
                  </h2>
-                 <p className="text-gray-600 mb-4 flex-grow-0">
-                   {post.content}
-                 </p>
+                 <p
+                   className="text-gray-600 mb-4 flex-grow-0"
+                   dangerouslySetInnerHTML={{ __html: post.content }}
+                 ></p>
 
                  {post.image && (
                    <div className="flex-grow flex justify-center items-center">

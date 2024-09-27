@@ -6,18 +6,18 @@ export const POST = async (req: Request) => {
     try {
         // recupération des données du post
         const body = await req.json();
+        const { title, content, image } = body;
         let imageBuffer = null;
-        if (body.image) {
+        if (image) {
             // Si l'image est en base64, la convertir en Buffer
-            imageBuffer = Buffer.from(body.image, "base64"); // Conversion base64 -> Buffer
+            imageBuffer = Buffer.from(body.image, "base64");  
         }
-        
         // requete vers la database  
         const post = await prisma.post.create({
             data: {
-                title: body.title,
-                content: body.content,
-                image: imageBuffer,  
+                title: title,
+                content: content,
+                image: imageBuffer,
             }
         });
 
@@ -30,12 +30,12 @@ export const POST = async (req: Request) => {
                 error: "Something went wrong!",
             },
             { status: 500 }
-        ); 
+        );
     }
 
 }
 
-export const GET = async (req: Request) => {
+export const GET = async () => {
     try {
         // Récupérer tous les posts
         const posts = await prisma.post.findMany();
