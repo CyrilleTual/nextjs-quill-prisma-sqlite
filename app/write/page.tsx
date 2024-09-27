@@ -8,7 +8,12 @@ import ImageUploader from "@/components/imageUploader";
 import Editor from "@/components/editor";
 
 export default function Write() {
-  const [post, setPost] = useState<Partial<Post>>({ title: "", content: "" });
+
+  type PostWithImage = Omit<Post, "image"> & {
+    image?: Blob | Buffer | string; // Définir le type de l'image comme Buffer ou string
+  };
+
+  const [post, setPost] = useState<Partial<PostWithImage>>({ title: "", content: "" });
 
   //  fonction pour sauvegarder le post
   const savePost = async () => {
@@ -31,10 +36,30 @@ export default function Write() {
     setPost((prevPost) => ({ ...prevPost, [key]: value }));
   };
 
-  const handleImageUpload = (image: ArrayBuffer) => {
-    const buffer = Buffer.from(image);
-    setPost((prevPost) => ({ ...prevPost, image: buffer }));
-  };
+  const handleImageUpload = (image: Blob) => {
+
+    // Créer un objet FileReader pour lire le contenu de l'image
+    const reader = new FileReader(); 
+    reader.readAsArrayBuffer(image);
+     // Lorsque la lecture est terminée, convertir le contenu en base64 
+    reader.onloadend = () => {
+      const arrayBuffer = reader.result as ArrayBuffer;
+
+      // Convertir ArrayBuffer en base64
+      const base64String = Buffer.from(arrayBuffer).toString("base64");
+
+      console.log("base64", base64String);
+
+      // Mettre à jour le post avec l'image en base64
+      setPost((prevPost) => ({ ...prevPost, image: base64String }));
+    };
+
+  }; 
+
+/*    const handleImageUpload = (image: Blob) => {
+     // Stocker l'image directement sous forme de Blob dans le post
+     setPost((prevPost) => ({ ...prevPost, image }));
+   }; */
  
   return (
     <div className="mx-auto w-full max-w-7xl flex flex-col justify-center items-center p-6 bg-white shadow-lg rounded-lg">

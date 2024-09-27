@@ -1,3 +1,4 @@
+import Header from "@/components/header";
 import "./globals.css";
 
 export default function RootLayout({
@@ -8,6 +9,7 @@ export default function RootLayout({
   return (
     <html lang="fr">
       <body className="">
+        <Header />
         <div className="flex flex-col justify-between min-h-screen">
            
           

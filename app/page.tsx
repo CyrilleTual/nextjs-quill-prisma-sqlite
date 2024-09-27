@@ -1,9 +1,9 @@
- import Write from '@/components/write';
-import prisma from '../lib/prisma';
-import { deepStrictEqual } from 'node:assert';
 
 export default async function Home() {
   return (
-    deepStrictEqual
+    <main className="flex bg-slate-200 flex-col justify-center items-center min-h-full gap-2">
+      <h1 className="text-3xl font-bold">Saisir ici</h1>
+      
+    </main>
   );
 }

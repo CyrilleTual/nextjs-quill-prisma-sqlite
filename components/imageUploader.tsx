@@ -6,7 +6,7 @@ import imageCompression from "browser-image-compression";
 import Image from "next/image";
 
 interface ImageUploaderProps {
-  onImageUpload: (image: ArrayBuffer) => void;
+  onImageUpload: (image: Blob) => void;
 }
 
 const ImageUploader: React.FC<ImageUploaderProps> = ({ onImageUpload }) => {
@@ -22,19 +22,19 @@ const ImageUploader: React.FC<ImageUploaderProps> = ({ onImageUpload }) => {
       maxSizeMB: 0.5,
       maxWidthOrHeight: 200,
       useWebWorker: true,
-      fileType: "image/jpeg",
     };
 
     try {
+      //console.log( "imageFile , ", imageFile);
       const compressedFile = await imageCompression(imageFile, options);
-      
-      const reader = new FileReader();
-      reader.readAsArrayBuffer(compressedFile);
-      reader.onloadend = () => {
-        const buffer = Buffer.from(reader.result as ArrayBuffer);
-        onImageUpload(buffer); // Envoyer l'image compressée au parent
-      };
 
+      //console.log("compressedFile , ", compressedFile);
+      //console.log("compressedFile instanceof Blob", compressedFile instanceof Blob); // true
+
+      // Passer le fichier compressé directement sous forme de Blob
+      onImageUpload(compressedFile);
+
+      // Créer une URL temporaire pour l'affichage
       const imageUrl = URL.createObjectURL(compressedFile);
       setImageSrc(imageUrl);
     } catch (error) {
