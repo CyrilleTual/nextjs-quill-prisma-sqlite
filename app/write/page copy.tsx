@@ -8,14 +8,12 @@ import ImageUploader from "@/components/imageUploader";
 import Editor from "@/components/editor";
 
 export default function Write() {
+
   type PostWithImage = Omit<Post, "image"> & {
     image?: Blob | Buffer | string; // Définir le type de l'image comme Buffer ou string
   };
 
-  const [post, setPost] = useState<Partial<PostWithImage>>({
-    title: "",
-    content: "",
-  });
+  const [post, setPost] = useState<Partial<PostWithImage>>({ title: "", content: "" });
 
   //  fonction pour sauvegarder le post
   const savePost = async () => {
@@ -39,10 +37,11 @@ export default function Write() {
   };
 
   const handleImageUpload = (image: Blob) => {
+
     // Créer un objet FileReader pour lire le contenu de l'image
-    const reader = new FileReader();
+    const reader = new FileReader(); 
     reader.readAsArrayBuffer(image);
-    // Lorsque la lecture est terminée, convertir le contenu en base64
+     // Lorsque la lecture est terminée, convertir le contenu en base64 
     reader.onloadend = () => {
       const arrayBuffer = reader.result as ArrayBuffer;
 
@@ -52,9 +51,10 @@ export default function Write() {
       // Mettre à jour le post avec l'image en base64
       setPost((prevPost) => ({ ...prevPost, image: base64String }));
     };
-  };
+  }; 
 
   return (
+    
     <div className="mx-auto w-full max-w-7xl flex flex-col justify-center items-center p-6 bg-white shadow-lg rounded-lg">
       {/* Le titre */}
       <div className="w-full mb-4">
