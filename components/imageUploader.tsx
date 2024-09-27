@@ -25,11 +25,10 @@ const ImageUploader: React.FC<ImageUploaderProps> = ({ onImageUpload }) => {
     };
 
     try {
-      console.log( "imageFile , ", imageFile);
+      //console.log( "imageFile , ", imageFile);
       const compressedFile = await imageCompression(imageFile, options);
-      console.log("compressedFile , ", compressedFile);
+      //console.log("compressedFile , ", compressedFile);
       onImageUpload(compressedFile);
-
       // Créer une URL temporaire pour l'affichage
       const imageUrl = URL.createObjectURL(compressedFile);
       setImageSrc(imageUrl);

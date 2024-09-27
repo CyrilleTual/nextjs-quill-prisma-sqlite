@@ -53,12 +53,8 @@ export default function Write() {
     };
   }; 
 
-/*    const handleImageUpload = (image: Blob) => {
-     // Stocker l'image directement sous forme de Blob dans le post
-     setPost((prevPost) => ({ ...prevPost, image }));
-   }; */
- 
   return (
+    
     <div className="mx-auto w-full max-w-7xl flex flex-col justify-center items-center p-6 bg-white shadow-lg rounded-lg">
       {/* Le titre */}
       <div className="w-full mb-4">
