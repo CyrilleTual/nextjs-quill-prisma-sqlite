@@ -1,4 +1,4 @@
-// pages/write.tsx
+// pages/write/page.tsx
 
 "use client";
 import "./style.css";
@@ -48,12 +48,9 @@ export default function Write() {
       // Convertir ArrayBuffer en base64
       const base64String = Buffer.from(arrayBuffer).toString("base64");
 
-      console.log("base64", base64String);
-
       // Mettre à jour le post avec l'image en base64
       setPost((prevPost) => ({ ...prevPost, image: base64String }));
     };
-
   }; 
 
 /*    const handleImageUpload = (image: Blob) => {

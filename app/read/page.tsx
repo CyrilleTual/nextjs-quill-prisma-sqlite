@@ -29,7 +29,7 @@ const PostsList = () => {
              {posts.map((post) => (
                <div
                  key={post.id}
-                 className="flex flex-col min-w-[220px] h-full mb-6 p-6 border rounded-lg shadow-md bg-white transition-transform transform hover:scale-105"
+                 className="prose flex flex-col min-w-[220px] h-full mb-6 p-6 border rounded-lg shadow-md bg-white transition-transform transform hover:scale-105"
                >
                  <h2 className="text-xl font-bold text-gray-800 mb-2 flex-grow-0">
                    {post.title}
@@ -40,12 +40,12 @@ const PostsList = () => {
                  ></p>
 
                  {post.image && (
-                   <div className="flex-grow flex justify-center items-center">
+                   <div className=" m-auto relative  flex justify-center   bg-slate-200 hjustify-center items-center h-[200px] w-[200px] rounded-md ">
                      <Image
                        src={`data:image/jpeg;base64,${post.image}`}
                        alt={post.title}
-                       width={200}
-                       height={200}
+                       fill={true}
+                       style={{ objectFit: "contain" }}
                        unoptimized={true}
                        className="rounded-md"
                      />

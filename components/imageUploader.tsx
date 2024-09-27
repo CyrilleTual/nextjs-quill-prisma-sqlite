@@ -25,13 +25,9 @@ const ImageUploader: React.FC<ImageUploaderProps> = ({ onImageUpload }) => {
     };
 
     try {
-      //console.log( "imageFile , ", imageFile);
+      console.log( "imageFile , ", imageFile);
       const compressedFile = await imageCompression(imageFile, options);
-
-      //console.log("compressedFile , ", compressedFile);
-      //console.log("compressedFile instanceof Blob", compressedFile instanceof Blob); // true
-
-      // Passer le fichier compressé directement sous forme de Blob
+      console.log("compressedFile , ", compressedFile);
       onImageUpload(compressedFile);
 
       // Créer une URL temporaire pour l'affichage
@@ -51,23 +47,27 @@ const ImageUploader: React.FC<ImageUploaderProps> = ({ onImageUpload }) => {
   }, [imageSrc]);
 
   return (
-    <div>
-      <h2>Vous pouvez ajouter une image</h2>
+    <div className="flex flex-col justify-center items-center">
+      <h2 className="">Vous pouvez ajouter une image</h2>
       <input
+        className="m-4"
         type="file"
         accept="image/jpeg, image/png"
         onChange={handleImageUpload}
       />
-      {imageSrc && (
-        <div className="relative flex justify-center items-center bg-slate-300 h-[200px] w-[200px]">
-          <Image
-            src={imageSrc}
-            alt="Image compressée"
-            fill={true}
-            style={{ objectFit: "contain" }}
-          />
+      {
+        <div className="bg-slate-200 flex justify-center items-center  relative h-[200px] w-[200px] rounded-md">
+          {imageSrc && (
+            <Image
+              src={imageSrc}
+              className="rounded-md"
+              alt="Image"
+              fill={true}
+              style={{ objectFit: "contain" }}
+            />
+          )}
         </div>
-      )}
+      }
     </div>
   );
 };

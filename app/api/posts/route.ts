@@ -9,7 +9,6 @@ export const POST = async (req: Request) => {
         const { title, content, image } = body;
         let imageBuffer = null;
         if (image) {
-            // Si l'image est en base64, la convertir en Buffer
             imageBuffer = Buffer.from(body.image, "base64");  
         }
         // requete vers la database  

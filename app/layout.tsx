@@ -11,10 +11,7 @@ export default function RootLayout({
       <body className="">
         <Header />
         <div className="flex flex-col justify-between min-h-screen">
-           
-          
           <div className="flex-grow"> {children}</div>
-           
         </div>
       </body>
     </html>
