@@ -10,13 +10,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="fr">
-      <body className="">
+      <body className="flex flex-col justify-center">
         <Header />
-        <div className="flex flex-col justify-between min-h-screen">
-          <div className="flex-grow flex justify-center items-center">
-            {" "}
-            {children}
-          </div>
+        <div className="flex-grow flex flex-col justify-center items-center">
+          {children}
         </div>
       </body>
     </html>
