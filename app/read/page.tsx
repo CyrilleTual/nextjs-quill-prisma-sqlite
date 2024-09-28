@@ -1,10 +1,12 @@
+// app/read/page.tsx
+
 "use client";
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import { Post } from "@prisma/client";
+import "./style.css";
 
-const PostsList = () => {
-
+export default function ReadPage() {
   type PostWithImage = Omit<Post, "image"> & {
     image?: string; // Définir le type de l'image comme Buffer ou string
   };
@@ -21,47 +23,47 @@ const PostsList = () => {
     fetchPosts();
   }, []);
 
-   return (
-     <>
-       {posts && posts.length > 0 ? (
-         <div className="max-w-4xl mx-auto p-4">
-           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-             {posts.map((post) => (
-               <div
-                 key={post.id}
-                 className="prose flex flex-col min-w-[220px] h-full mb-6 p-6 border rounded-lg shadow-md bg-white transition-transform transform hover:scale-105"
-               >
-                 <h2 className="text-xl font-bold text-gray-800 mb-2 flex-grow-0">
-                   {post.title}
-                 </h2>
-                 <p
-                   className="text-gray-600 mb-4 flex-grow-0"
-                   dangerouslySetInnerHTML={{ __html: post.content }}
-                 ></p>
+  return (
+    <>
+      {posts && posts.length > 0 ? (
+        <div className="max-w-4xl mx-auto p-4">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            {posts.map((post) => (
+              <div
+                key={post.id}
+                className="flex lg:flex-col lg:items-center justify-around min-w-[220px] h-full mb-6 p-6 border rounded-lg shadow-md bg-white transition-transform transform hover:scale-105"
+              >
+                <div>
+                  <h2 className="text-xl font-bold text-gray-800 mb-2 flex-grow-0">
+                    {post.title}
+                  </h2>
+                  <div
+                    className="prose"
+                    dangerouslySetInnerHTML={{ __html: post.content }}
+                  ></div>
+                </div>
 
-                 {post.image && (
-                   <div className=" m-auto relative  flex justify-center   bg-slate-200 hjustify-center items-center h-[200px] w-[200px] rounded-md ">
-                     <Image
-                       src={`data:image/jpeg;base64,${post.image}`}
-                       alt={post.title}
-                       fill={true}
-                       style={{ objectFit: "contain" }}
-                       unoptimized={true}
-                       className="rounded-md"
-                     />
-                   </div>
-                 )}
-               </div>
-             ))}
-           </div>
-         </div>
-       ) : (
-         <div className="max-w-3xl mx-auto p-4 text-center text-gray-600">
-           <p>Loading</p>
-         </div>
-       )}
-     </>
-   );
-};
-
-export default PostsList;
+                {post.image && (
+                  <div className="mt-4 mx-3 bg-slate-200 flex justify-center items-center  relative h-[200px] w-[200px] rounded-md">
+                    <Image
+                      src={`data:image/jpeg;base64,${post.image}`}
+                      className="rounded-md"
+                      alt="Image"
+                      fill={true}
+                      style={{ objectFit: "contain" }}
+                      unoptimized={true}
+                    />
+                  </div>
+                )}
+              </div>
+            ))}
+          </div>
+        </div>
+      ) : (
+        <div className="max-w-3xl mx-auto p-4 text-center text-gray-600">
+          <p>Loading</p>
+        </div>
+      )}
+    </>
+  );
+}
