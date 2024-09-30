@@ -2,6 +2,9 @@
 
 import { NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
+import { Post } from "@prisma/client";
+
+
 
 export const POST = async (req: Request) => {
 
@@ -36,13 +39,14 @@ export const POST = async (req: Request) => {
 
 }
 
+
 export const GET = async () => {
     try {
         // Récupérer tous les posts
         const posts = await prisma.post.findMany();
 
         // Convertir l'image (Bytes) en base64 pour chaque post
-        const postsWithImages = posts.map((post) => ({
+        const postsWithImages  = posts.map((post) => ({
             ...post,
             image: post.image ? post.image.toString("base64") : null, // Convertir Buffer en base64
         }));
@@ -61,7 +65,7 @@ export const GET = async () => {
 // delete all posts except the first one
 export const DELETE = async () => {
     try {
-        const posts = await prisma.post.findMany();
+        const posts: Post[] = await prisma.post.findMany();
         const postIds = posts.map((post) => post.id);
         const firstPostId = postIds[0];
         const deletePosts = await prisma.post.deleteMany({

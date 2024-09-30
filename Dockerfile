@@ -1,28 +1,18 @@
-# Utiliser une image de base légère pour la production
-FROM node:18-alpine AS runner
 
-# Définir le répertoire de travail
+FROM node:18-alpine AS builder
 WORKDIR /app
-
-# Copier le fichier package.json et package-lock.json (s'il existe)
+RUN npm install -g pnpm
+COPY prisma ./prisma
+ENV DATABASE_URL="file:./dev.db"
+ENV NEXT_TELEMETRY_DISABLED=1
 COPY package.json ./
-COPY package-lock.json ./  
-
-# Installer les dépendances
-RUN npm install --production  # Installe uniquement les dépendances de production
-
-# Copier le reste des fichiers de l'application
+RUN pnpm install
 COPY . .
+RUN pnpm run build
 
-# Construire l'application Next.js
-RUN npm run build
+COPY entrypoint.sh /
+RUN chmod +x entrypoint.sh
+ENTRYPOINT [ "/entrypoint.sh" ]
 
-# Ajuster les permissions du fichier de base de données
-RUN chmod 666 ./prisma/dev.db
 
-# Exposer le port pour accéder à l'application
-EXPOSE 3000
-
-# Démarrer l'application
-CMD ["npm", "start"]
 

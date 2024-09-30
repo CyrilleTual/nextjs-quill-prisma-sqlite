@@ -1,19 +1,19 @@
-version: "3.9"
+version: '3.9'
 
 services:
   app:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    volumes:
-      - .:/app # Monter votre projet local dans le container
-      - /app/node_modules # Monter le dossier node_modules pour éviter les conflits locaux
-      - ./prisma:/app/prisma  # Monter le dossier prisma contenant dev.db
+    image: cyrilletual/nextjs-quill-prisma-sqlite:latest  
+    container_name: nextjs-quill
     ports:
-      - "3000:3000" # Rediriger le port 3000 pour l'accès local
+      - "3000:3000"  # Mappez le port 3000 de votre hôte au port 3000 du conteneur
     environment:
-      - DATABASE_URL=file:/app/prisma/dev.db # URL de la base de données SQLite
-    restart: always # Redémarrer le container en cas d'échec
-    command: ["npm", "run", "start"] 
-volumes:
-  node_modules:
+      DATABASE_URL: "file:./dev.db"  # URL de la base de données SQLite
+    restart: unless-stopped
+    volumes:
+      - ./prisma:/app/prisma  # Montez le dossier prisma pour persister les données
+    networks:
+      - nextjs-network
+
+networks:
+  nextjs-network:
+    driver: bridge
