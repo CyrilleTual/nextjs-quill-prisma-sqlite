@@ -4,23 +4,25 @@ FROM node:18-alpine AS runner
 # Définir le répertoire de travail
 WORKDIR /app
 
-# Copier les fichiers nécessaires depuis votre machine locale
+# Copier le fichier package.json et package-lock.json (s'il existe)
+COPY package.json ./
+COPY package-lock.json ./  
 
-# Copier les dépendances (déjà installées)
-COPY node_modules ./node_modules
+# Installer les dépendances
+RUN npm install --production  # Installe uniquement les dépendances de production
 
-# Copier le build Next.js
-COPY .next ./.next
+# Copier le reste des fichiers de l'application
+COPY . .
 
-# Copier Prisma (fichier de base de données et le client généré)
-COPY prisma ./prisma
-COPY prisma/dev.db ./prisma/dev.db
+# Construire l'application Next.js
+RUN npm run build
 
-# Copier le fichier package.json
-COPY package.json ./package.json
+# Ajuster les permissions du fichier de base de données
+RUN chmod 666 ./prisma/dev.db
 
 # Exposer le port pour accéder à l'application
 EXPOSE 3000
 
 # Démarrer l'application
 CMD ["npm", "start"]
+

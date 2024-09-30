@@ -55,3 +55,27 @@ export const GET = async () => {
         );
     }
 };
+
+// delete all posts except the first one
+export const DELETE = async () => {
+    try {
+        const posts = await prisma.post.findMany();
+        const postIds = posts.map((post) => post.id);
+        const firstPostId = postIds[0];
+        const deletePosts = await prisma.post.deleteMany({
+            where: {
+                id: {
+                    not: firstPostId,
+                },
+            },
+        });
+
+        return NextResponse.json(deletePosts, { status: 200 });
+    } catch (error) {
+        console.error(error);
+        return NextResponse.json(
+            { error: "Something went wrong!" },
+            { status: 500 }
+        );
+    }
+};

@@ -12,8 +12,8 @@ services:
     ports:
       - "3000:3000" # Rediriger le port 3000 pour l'accès local
     environment:
-      - DATABASE_URL=file:./prisma/dev.db # URL de la base de données SQLite
+      - DATABASE_URL=file:/app/prisma/dev.db # URL de la base de données SQLite
     restart: always # Redémarrer le container en cas d'échec
-
+    command: ["npm", "run", "start"] 
 volumes:
   node_modules:
