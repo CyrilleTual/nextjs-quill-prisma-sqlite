@@ -29,6 +29,8 @@ export default function Write() {
 
     if (response.ok) {
       console.log("Post saved");
+      //redirection vers la page de lecture
+      window.location.href = "/read";
     } else {
       console.error("Failed to save post");
     }
