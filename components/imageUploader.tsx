@@ -18,6 +18,26 @@ const ImageUploader: React.FC<ImageUploaderProps> = ({ onImageUpload }) => {
     if (!files) return;
 
     const imageFile = files[0];
+
+    // Verifie du type MIME de l'image
+    if (!imageFile.type.startsWith("image/")) {
+      alert("Veuillez télécharger un fichier image valide.");
+      return;
+    }
+
+    // Vérification de la taille du fichier (ex. taille max 2MB)
+    const maxFileSize = 2 * 1024 * 1024; // 2MB
+    if (imageFile.size > maxFileSize) {
+      alert("La taille de l'image ne doit pas dépasser 2MB.");
+      return;
+    }
+
+    const validImage = await validateImage(imageFile);
+    if (!validImage) {
+      alert("The file is not a valid image.");
+      return;
+    }
+
     const options = {
       maxSizeMB: 0.5,
       maxWidthOrHeight: 200,
@@ -47,7 +67,7 @@ const ImageUploader: React.FC<ImageUploaderProps> = ({ onImageUpload }) => {
 
   return (
     <div className="flex flex-col justify-center items-center">
-      <h2 className="">Vous pouvez ajouter une image</h2>
+      <h2 className="">Vous pouvez ajouter une image (jpeg / png - max 2Mo)</h2>
       <input
         className="m-4"
         type="file"
@@ -69,6 +89,16 @@ const ImageUploader: React.FC<ImageUploaderProps> = ({ onImageUpload }) => {
       }
     </div>
   );
+};
+
+// Helper function to validate if file is an image
+const validateImage = (file: File): Promise<boolean> => {
+  return new Promise((resolve) => {
+    const img = new window.Image();
+    img.src = URL.createObjectURL(file);
+    img.onload = () => resolve(true);
+    img.onerror = () => resolve(false);
+  });
 };
 
 export default ImageUploader;

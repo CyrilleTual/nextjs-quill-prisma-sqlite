@@ -17,7 +17,7 @@ export default function ReadPage() {
     // Récupérer les posts depuis l'API
     const fetchPosts = async () => {
       const response = await fetch("/api/posts");
-      const data = await response.json();
+      const data : PostWithImage[]= await response.json();
       setPosts(data);
     };
     fetchPosts();
