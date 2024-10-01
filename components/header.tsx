@@ -6,11 +6,6 @@ import  { useState } from 'react'
 import { handleDelete } from '@/lib/deletePosts';
 import Modal from './modal';
 
-
-
-
-
-
 export default function Header() {
 
 const [isModalOpen, setIsModalOpen] = useState(false);

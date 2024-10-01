@@ -7,13 +7,17 @@ services:
     ports:
       - "3000:3000"  # Mappez le port 3000 de votre hôte au port 3000 du conteneur
     environment:
-      DATABASE_URL: "file:./dev.db"  # URL de la base de données SQLite
+      DATABASE_URL: "file:./dev.db"   
     restart: unless-stopped
     volumes:
-      - ./prisma:/app/prisma  # Montez le dossier prisma pour persister les données
+      - prisma_data:/app/prisma  # Montez le dossier prisma pour persister les données
     networks:
       - nextjs-network
 
 networks:
   nextjs-network:
     driver: bridge
+
+volumes:
+  prisma_data:
+
